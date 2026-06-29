@@ -1,0 +1,14 @@
+/*
+ * Baseline CSS layer for the Jira Preview Panel Widener.
+ *
+ * JS does all the heavy lifting via inline setProperty('important') calls.
+ * This file only adds a smooth width transition so the panel animates when
+ * toggled or when the popup slider is moved.
+ *
+ * The transition applies to the computed value change between two inline
+ * !important values, so it works even though JS drives the actual widths.
+ */
+
+[data-testid*="preview-panel"] {
+  transition: width 0.15s ease, max-width 0.15s ease, flex-basis 0.15s ease !important;
+}

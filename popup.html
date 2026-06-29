@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jira Preview Widener</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      color: #172B4D;
+      width: 240px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    h1 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0052CC;
+      margin-bottom: 14px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Toggle row ── */
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .knob {
+      position: absolute;
+      inset: 0;
+      background: #DFE1E6;
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .knob::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    input:checked ~ .knob               { background: #0052CC; }
+    input:checked ~ .knob::before       { transform: translateX(18px); }
+    input:focus-visible ~ .knob         { outline: 2px solid #0052CC; outline-offset: 2px; }
+
+    /* ── Width slider ── */
+    .slider-group { margin-bottom: 14px; }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      color: #5E6C84;
+    }
+    #width-display { font-weight: 600; color: #172B4D; }
+
+    input[type=range] {
+      width: 100%;
+      height: 4px;
+      accent-color: #0052CC;
+      cursor: pointer;
+    }
+
+    .slider-limits {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #97A0AF;
+      margin-top: 4px;
+    }
+
+    /* ── Status footer ── */
+    .footer {
+      border-top: 1px solid #EBECF0;
+      padding-top: 10px;
+      text-align: center;
+      font-size: 11px;
+    }
+    .status { font-weight: 600; }
+    .status.active   { color: #00875A; }
+    .status.inactive { color: #97A0AF; }
+
+    .no-jira {
+      display: none;
+      color: #5E6C84;
+      margin-top: 4px;
+    }
+
+    /* Dim controls when not on a Jira page */
+    body.no-content .slider-group,
+    body.no-content .row { opacity: 0.4; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <h1>Jira Preview Widener</h1>
+
+  <div class="row">
+    <label for="toggle">Enable</label>
+    <label class="switch">
+      <input type="checkbox" id="toggle" checked>
+      <span class="knob"></span>
+    </label>
+  </div>
+
+  <div class="slider-group">
+    <div class="slider-header">
+      <span>Panel width</span>
+      <span id="width-display">70vw</span>
+    </div>
+    <input type="range" id="width-slider" min="50" max="85" value="70" step="1"
+           aria-label="Panel width in viewport width units">
+    <div class="slider-limits"><span>50vw</span><span>85vw</span></div>
+  </div>
+
+  <div class="footer">
+    <span class="status active" id="status">Active</span>
+    <p class="no-jira" id="no-jira">Navigate to your Jira instance to use this extension.</p>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

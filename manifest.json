@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Jira Preview Panel Widener",
+  "version": "1.0.0",
+  "description": "Widens the Jira Cloud preview panel past its 50% cap. Drag to resize, toggle with Alt+Shift+W, persists across navigations.",
+  "permissions": ["storage"],
+  "icons": {
+    "16":  "icons/icon16.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "toggle-widener": {
+      "suggested_key": { "default": "Alt+Shift+W" },
+      "description": "Toggle the preview panel widener on/off"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.atlassian.net/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16":  "icons/icon16.png",
+      "48":  "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  }
+}
